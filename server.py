@@ -39,5 +39,5 @@ class Application(tornado.web.Application):
 
 if __name__ == '__main__':
     http_server = tornado.httpserver.HTTPServer(Application())
-    http_server.listen(8080)
+    http_server.listen(site_config['server_port'])
     tornado.ioloop.IOLoop.instance().start()
