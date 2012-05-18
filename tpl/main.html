@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link type="text/css" rel="stylesheet" href="static/main.css" />
+
+<title>CS 253 Blog - Udacity</title>
+</head>
+
+<body>
+	<a href="/" class="main-title"> CS 253 Blog </a>
+	<div class="login-area">
+		<a href="/signup" class="login-link">Signup</a>
+		<a href="/newpost" class="login-link">Newpost</a>
+	</div>
+
+	<div id="content">
+		{% block content %}
+			Welcome to nenTi's blog.
+		{% end %}
+	</div>
+</body>
+
+</html>

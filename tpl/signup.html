@@ -1,0 +1,25 @@
+{% extends main.html %}
+{% block content%}
+	<form method="post">
+		{% raw xsrf_form_html() %}
+	    <h1>Signup</h1>
+	    <label>Username
+	        <input type="text" name="username" value="{{username}}" /> {{username_error}}
+	    </label>
+	    <br />
+	    <label>Password
+	        <input type="password" name="password" /> {{password_error}}
+	    </label>
+	    <br />
+	    <label>Verify Password
+	        <input type="password" name="verify" />
+	    </label>
+	    <br />
+	    <label>Email
+	        <input type="text" name="email" value="{{email}}" /> {{email_error}}
+	    </label>
+	    <br />
+	    <br />
+	    <input type="submit" />
+	</form>
+{% end %}
