@@ -23,7 +23,7 @@ class NewpostHandler(BaseHandler):
                 attrs = item_data
             )
             item.put()
-            self.redirect("/")
+            self.redirect("/%s" % subject)
         else:
             error = "Subject and Content are required to save the blogpost"
             self.render("newpost.html", subject = subject, content = content, error = error)
