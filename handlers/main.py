@@ -8,7 +8,7 @@ class IndexHandler(BaseHandler):
             posts = table.get_item('Posts', post_id)
             posts_ = [posts] #for homework evaluation
         else:
-            posts = list(table.query('Posts', max_results=10))
+            posts = list(table.query('Posts', max_results=10, scan_index_forward=False))
             posts_ = posts #for homework evaluation
             
         if print_json:

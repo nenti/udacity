@@ -13,18 +13,14 @@ class NewpostHandler(BaseHandler):
         
         if subject and content:
             blogpost = Blogpost(subject = subject, content = content)
-            table = self.db.get_table(blogpost.table)
-            item_data = {
-                         'content': blogpost.content,
-                         'created': blogpost.created
-            }
+            table = self.db.get_table(Blogpost.TABLE)
             item = table.new_item(
-                hash_key = 'Posts',
-                range_key = blogpost.subject,
-                attrs = item_data
+                hash_key = blogpost.getHashKey(),
+                range_key = blogpost.getRangeKey(),
+                attrs = blogpost.getData()
             )
             item.put()
-            self.redirect("/%s" % urllib.quote(subject))
+            self.redirect("/%s" % urllib.quote(blogpost.getRangeKey()))
         else:
             error = "Subject and Content are required to save the blogpost"
             self.render("newpost.html", subject = subject, content = content, error = error)
