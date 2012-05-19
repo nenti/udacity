@@ -1,4 +1,5 @@
 import tornado
+import urllib
 from .base import BaseHandler
 from models import Blogpost
 
@@ -23,7 +24,7 @@ class NewpostHandler(BaseHandler):
                 attrs = item_data
             )
             item.put()
-            self.redirect("/%s" % subject)
+            self.redirect("/%s" % urllib.quote(subject))
         else:
             error = "Subject and Content are required to save the blogpost"
             self.render("newpost.html", subject = subject, content = content, error = error)
