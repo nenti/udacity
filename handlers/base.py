@@ -1,5 +1,7 @@
 import tornado.web
+import urlparse
 from lib.user_utils import check_secure_val
+from tornado.escape import utf8
 
 class BaseHandler(tornado.web.RequestHandler):
     @property
@@ -19,5 +21,13 @@ class BaseHandler(tornado.web.RequestHandler):
         user_id = check_secure_val(self.get_cookie('user_id'))
         if user_id:
             return user_id
+        
+    def redirect(self, url, **kwargs):
+        """
+        Turns the relative redirect path of the redirect statement into an absolute one to 
+        work with udacity's googleappengine http client
+        """
+        url = urlparse.urljoin(utf8(self.request.protocol + "://" + self.request.host),url)
+        super( BaseHandler, self ).redirect(url, **kwargs)
         
         #http://77.176.250.245:8080/
