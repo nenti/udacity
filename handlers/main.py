@@ -1,20 +1,36 @@
 from .base import BaseHandler
 
+LIST_CACHE_KEY = "list_cache"
+ENTRY_CACHE_KEY = "entry_cache"
+
 class IndexHandler(BaseHandler):
     def get(self, post_id, print_json):
 
         table = self.db.get_table('blog')
         if post_id:
-            posts = table.get_item('Posts', post_id)
-            posts_ = [posts] #for homework evaluation
+            key = ENTRY_CACHE_KEY + str(post_id)
+            if key in self.CACHE:
+                posts_ = [self.CACHE[key]]
+                query_time = self.CACHE.getDelta(key)
+            else:
+                self.CACHE[key] = table.get_item('Posts', post_id)
+                posts_ = [self.CACHE[key]]
+                query_time = self.CACHE.getDelta(key)
+            posts = self.CACHE[key]
         else:
-            posts = list(table.query('Posts', max_results=10, scan_index_forward=False))
-            posts_ = posts #for homework evaluation
-            
+            if LIST_CACHE_KEY in self.CACHE:
+                posts_ = self.CACHE[LIST_CACHE_KEY]
+                query_time = self.CACHE.getDelta(LIST_CACHE_KEY)
+            else:
+                self.CACHE[LIST_CACHE_KEY] = list(table.query('Posts', max_results=10, scan_index_forward=False))
+                posts_ = self.CACHE[LIST_CACHE_KEY]
+                query_time = self.CACHE.getDelta(LIST_CACHE_KEY)
+            posts = posts_
+                            
         if print_json:
             self.return_json(posts)
         else:
-            self.render("blog.html", posts = posts_)
+            self.render("blog.html", posts = posts_, query_time = query_time)
             
 #class WelcomePage(webapp2.RequestHandler):
 #    def get(self):

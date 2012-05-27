@@ -2,8 +2,12 @@ import tornado.web
 import urlparse
 from lib.user_utils import check_secure_val
 from tornado.escape import utf8
+from lib.cache import Cache
 
 class BaseHandler(tornado.web.RequestHandler):
+    
+    CACHE = Cache()
+    
     @property
     def db(self):
         return self.application.db

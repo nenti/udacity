@@ -10,6 +10,7 @@ from handlers import SignupHandler
 from handlers import LogoutHandler
 from handlers import LoginHandler
 from handlers import WelcomeHandler
+from handlers import FlushHandler
 from server_config import site_config
 from db import ConnectDB
 
@@ -21,6 +22,7 @@ class Application(tornado.web.Application):
             (r'/login', LoginHandler),
             (r'/welcome', WelcomeHandler),
             (r'/newpost', NewpostHandler),
+            (r'/flush', FlushHandler),
             (r'/(?:([^.]+)|(.json))*', IndexHandler),
         ]
         settings = {

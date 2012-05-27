@@ -5,3 +5,4 @@ from .login import LoginHandler
 from .logout import LogoutHandler
 from .signup import SignupHandler
 from .welcome import WelcomeHandler
+from .flush import FlushHandler
