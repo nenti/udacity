@@ -17,7 +17,7 @@ def ConnectDB():
 #class DynamoModel(object):
 #    def __init__(self, **kw):
 #        for key, value in kw.iteritems():
-#            self[key] = value
+#            self[key] = value 
         
 
 #class ValidationError(Exception):
