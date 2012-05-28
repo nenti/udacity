@@ -1,0 +1,14 @@
+<form method="post">
+	{% raw xsrf_form_html() %}
+    <h1>Login</h1>
+    <label>Username
+        <input type="text" name="username" value="{{username}}" />
+    </label>
+    <br />
+    <label>Password
+        <input type="password" name="password" /> {{login_error}}
+    </label>
+    <br />
+    <br />
+    <input type="submit" />
+</form>

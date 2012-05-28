@@ -1,0 +1,11 @@
+{% extends "main.html" %}
+{% block content %}
+	<br />
+	<form method="post">{% raw xsrf_form_html() %}
+
+		<textarea name="content">{% raw page["content"] %}</textarea>
+		<br />
+		<input type="submit" value="save" />
+		
+	</form>
+{% end %}

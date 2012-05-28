@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link type="text/css" rel="stylesheet" href="{{ static_url('main.css') }}" />
+
+<title>CS 253 Wiki - Udacity</title>
+</head>
+
+<body>
+	<a href="/" class="login-link">MainPage</a>
+	<div class="login-area">
+			
+		{% if current_user %}
+			<a href="/_edit{{ request.path }}" class="login-link">edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			{{ current_user }} 
+			(<a href="/logout" class="login-link">logout</a>)
+		{% else %}
+			<a href="/login" class="login-link">login</a> | 
+			<a href="/signup" class="login-link">signup</a>
+		{% end %}
+	</div>
+
+	<div id="content">
+		{% block content %}
+			Welcome to nenTi's blog.
+		{% end %}
+	</div>
+	
+	<footer>
+		{% block footer %}
+		{% end %}
+	</footer>
+</body>
+
+</html>
