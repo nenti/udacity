@@ -26,6 +26,8 @@ class IndexHandler(BaseHandler):
                 posts_ = self.CACHE[LIST_CACHE_KEY]
                 query_time = self.CACHE.getDelta(LIST_CACHE_KEY)
             posts = posts_
+            
+            #query_time = query_time if query_time > 2 else 0
                             
         if print_json:
             self.return_json(posts)
