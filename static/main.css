@@ -99,6 +99,19 @@ input[type=submit] {
 
 }
 
-.post-content {
-    margin-top: 5px;
+#content {
+    margin-top: 15px;
+}
+
+.history-table td{
+	padding:8px;
+	width: 100%;
+}
+
+.history-table {
+	width: 100%;
+}
+
+.marked {
+	background-color:#ddd;
 }

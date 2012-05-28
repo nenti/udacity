@@ -5,11 +5,15 @@ class WikiPage(object):
     TABLE = 'blog'
     TYPE = 'WikiPage'
 
-    def __init__(self, page_id, content):
+    def __init__(self, page_id, content, version):
         #self.id = str(int(time.time())) + "-" + str(uuid.uuid1()) #combine uuid and time to sort by time
-        self.id = page_id
+        self.id = page_id + "#"
         self.content = content
         self.created = str(self._now())
+        if version:
+            self.id += version
+        else:
+            self.id += self.created
 
     @staticmethod
     def getHashKey():

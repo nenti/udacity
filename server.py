@@ -9,6 +9,7 @@ from handlers import LogoutHandler
 from handlers import LoginHandler
 from handlers import WikiHandler
 from handlers import EditHandler
+from handlers import HistoryHandler
 from server_config import site_config
 from db import ConnectDB
 
@@ -21,6 +22,7 @@ class Application(tornado.web.Application):
             (r'/logout', LogoutHandler),
             (r'/login', LoginHandler),
             ('/_edit' + PAGE_RE, EditHandler),
+            ('/_history' + PAGE_RE, HistoryHandler),
             (PAGE_RE, WikiHandler),
         ]
         settings = {

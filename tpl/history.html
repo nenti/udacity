@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+
+{% block manage_links %}
+	<a href="/_edit{{ page_id }}" class="login-link">edit</a> | 
+	<a href="/{{ page_id }}" class="login-link">view</a>
+{% end %}
+
+{% block content %}
+	<table class="history-table" cellspacing="0">
+		{% for i, page in enumerate(pages) %}
+			<tr class="{% if i%2 == 0 %}marked{% end %}">
+				<td style="width:30%;">
+					{{ page["created"] }}
+				</td>
+				<td style="width:60%;">{{ page["content"] }}</td>
+				<td style="width:10%;">
+					<a href="{{ page['page_id'] }}?v={{page['version']}}" class="login-link">view</a>
+					<a href="/_edit{{ page['page_id'] }}?v={{page['version']}}" class="login-link">edit</a>
+				</td>
+			</tr>
+		{% end %}
+	</table>
+{% end %}

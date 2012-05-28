@@ -11,7 +11,11 @@
 	<div class="login-area">
 			
 		{% if current_user %}
-			<a href="/_edit{{ request.path }}" class="login-link">edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			{% block manage_links %}
+				<a href="/_edit{{ request.path }}" class="login-link">edit</a> | 
+				<a href="/_history{{ request.path }}" class="login-link">history</a>
+			{% end %}
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			{{ current_user }} 
 			(<a href="/logout" class="login-link">logout</a>)
 		{% else %}

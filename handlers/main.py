@@ -1,20 +1,29 @@
 from .base import BaseHandler
 from models import WikiPage
 from boto.dynamodb.exceptions import DynamoDBKeyNotFoundError
+from boto.dynamodb.condition import BEGINS_WITH
 
 LIST_CACHE_KEY = "list_cache"
 ENTRY_CACHE_KEY = "entry_cache"
 
 class WikiHandler(BaseHandler):
     def get(self, page_id):
-
+        
+        version = self.get_argument( "v", default="" )
+        
         table = self.db.get_table( WikiPage.TABLE )
         
         try:
-            page = table.get_item( WikiPage.getHashKey(), page_id )
+            page = table.query( WikiPage.getHashKey(), 
+                                 range_key_condition = BEGINS_WITH(page_id + "#" + version),
+                                 max_results=1, scan_index_forward=False)
+            page = list(page).pop()
             self.render( "wiki_page.html", page = page )
-        except DynamoDBKeyNotFoundError:
+        except IndexError:
             self.redirect( "/_edit" + page_id )
+        
+        
+        
 
         
 
