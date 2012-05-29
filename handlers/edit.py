@@ -10,24 +10,27 @@ class EditHandler(BaseHandler):
     def get(self, page_id):
         
         version = self.get_argument( "v", default="" )
+        identifier = page_id + "#" + version
         table = self.db.get_table( WikiPage.TABLE )
 
-        try:
+        if self.CACHE.has_key(identifier):
+            page = self.CACHE[identifier]
+        else:
             page = table.query( WikiPage.getHashKey(), 
                                  range_key_condition = BEGINS_WITH(page_id + "#" + version),
                                  max_results=1, scan_index_forward=False)
-            page = list(page).pop()
-        except IndexError:
-            page = {"content": ""}
+            if page:
+                page = list(page).pop()
+            else:
+                page = {"content": ""}
 
         self.render( "edit.html", page=page )
     
     @tornado.web.authenticated
     def post(self, page_id):
         content = self.get_argument( "content", default="" )
-        version = self.get_argument( "v", default="" )
 
-        page = WikiPage( page_id = page_id, content = content, version = version )
+        page = WikiPage( page_id = page_id, content = content )
         table = self.db.get_table( WikiPage.TABLE )
         item = table.new_item(
             hash_key = page.getHashKey(),
@@ -35,4 +38,5 @@ class EditHandler(BaseHandler):
             attrs = page.getData()
         )
         item.put()
+        self.CACHE[page_id + "#"] = page.getData()
         self.redirect( page_id )

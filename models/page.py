@@ -5,7 +5,7 @@ class WikiPage(object):
     TABLE = 'blog'
     TYPE = 'WikiPage'
 
-    def __init__(self, page_id, content, version):
+    def __init__(self, page_id, content, version=""):
         #self.id = str(int(time.time())) + "-" + str(uuid.uuid1()) #combine uuid and time to sort by time
         self.id = page_id + "#"
         self.content = content

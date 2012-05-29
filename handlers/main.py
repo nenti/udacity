@@ -10,16 +10,26 @@ class WikiHandler(BaseHandler):
     def get(self, page_id):
         
         version = self.get_argument( "v", default="" )
+        identifier = page_id + "#" + version
         
         table = self.db.get_table( WikiPage.TABLE )
-        
-        try:
+
+        if self.CACHE.has_key(identifier):
+            page = self.CACHE[identifier]
+            hit = "False"
+        else:
             page = table.query( WikiPage.getHashKey(), 
                                  range_key_condition = BEGINS_WITH(page_id + "#" + version),
                                  max_results=1, scan_index_forward=False)
-            page = list(page).pop()
-            self.render( "wiki_page.html", page = page )
-        except IndexError:
+            page = list(page)
+            hit = "True"
+            if page:
+                page = page.pop()
+                self.CACHE[identifier] = page
+        
+        if page:
+            self.render( "wiki_page.html", page = page, hit=hit )
+        else:
             self.redirect( "/_edit" + page_id )
         
         

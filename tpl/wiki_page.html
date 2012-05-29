@@ -1,4 +1,9 @@
 {% extends "main.html" %}
+
 {% block content %}
 	{% raw page["content"] %}
+{% end %}
+
+{% block footer %}
+	{{hit}}
 {% end %}
