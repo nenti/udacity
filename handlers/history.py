@@ -15,7 +15,7 @@ class HistoryHandler(BaseHandler):
         try:
             pages_ = table.query( WikiPage.getHashKey(), 
                                  range_key_condition = BEGINS_WITH(page_id + "#"),
-                                 max_results=10, scan_index_forward=False)
+                                 max_results=20, scan_index_forward=False)
         except DynamoDBKeyNotFoundError:
             pages = [{"content": "", "created": "", "Identifier": ""}]
 
