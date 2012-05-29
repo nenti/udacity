@@ -19,8 +19,9 @@ class EditHandler(BaseHandler):
             page = table.query( WikiPage.getHashKey(), 
                                  range_key_condition = BEGINS_WITH(page_id + "#" + version),
                                  max_results=1, scan_index_forward=False)
+            page = list(page)
             if page:
-                page = list(page).pop()
+                page = page.pop()
             else:
                 page = {"content": ""}
 
